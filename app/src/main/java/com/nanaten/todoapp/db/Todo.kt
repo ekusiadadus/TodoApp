@@ -5,6 +5,13 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class Todo(
+    val id: Int,
     val title: String,
-    val isCompleted: Boolean
-) : Parcelable
+    var isCompleted: Boolean
+) : Parcelable {
+    constructor(entity: TodoEntity) : this(
+        entity.id,
+        entity.title,
+        entity.isCompleted
+    )
+}
