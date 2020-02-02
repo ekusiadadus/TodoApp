@@ -25,13 +25,17 @@ class TodoListFragment : DaggerFragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_todo_list, container, false)
-        binding.lifecycleOwner = viewLifecycleOwner
-        binding.todoRv.layoutManager = LinearLayoutManager(context)
-        binding.todoRv.adapter = mAdapter
-        val tabs = TodoTab.values().toList()
-        tabs.forEach { tab ->
-            binding.todoTab.addTab(binding.todoTab.newTab().setText(tab.tabName))
+
+        binding.apply {
+            lifecycleOwner = viewLifecycleOwner
+            todoRv.layoutManager = LinearLayoutManager(context)
+            todoRv.adapter = mAdapter
+            val tabs = TodoTab.values().toList()
+            tabs.forEach { tab ->
+                todoTab.addTab(binding.todoTab.newTab().setText(tab.tabName))
+            }
         }
+
         return binding.root
     }
 
