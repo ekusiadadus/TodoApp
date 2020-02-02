@@ -13,10 +13,9 @@ class TodoAdapter : BaseRecyclerViewAdapter() {
     private var list: List<Todo> = emptyList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return if (list.isEmpty()) {
-            EmptyItemViewHolder(parent)
-        } else {
-            TodoItemViewHolder(parent)
+        return when (viewType) {
+            R.layout.list_item_empty -> EmptyItemViewHolder(parent)
+            else -> TodoItemViewHolder(parent)
         }
     }
 
@@ -26,7 +25,7 @@ class TodoAdapter : BaseRecyclerViewAdapter() {
 
     fun setData(list: List<Todo>) {
         this.list = list
-        notifyDataSetChanged()
+        notifyItemChanged(list.size)
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
@@ -49,6 +48,14 @@ class TodoAdapter : BaseRecyclerViewAdapter() {
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item: Todo) {
             binding.todo = item
+        }
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        return if (list.isEmpty()) {
+            R.layout.list_item_empty
+        } else {
+            R.layout.list_item_todo
         }
     }
 
