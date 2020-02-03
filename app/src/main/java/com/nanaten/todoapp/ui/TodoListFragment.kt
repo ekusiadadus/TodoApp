@@ -9,7 +9,9 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.tabs.TabLayout
 import com.nanaten.todoapp.R
+import com.nanaten.todoapp.adapter.ItemClickListener
 import com.nanaten.todoapp.adapter.TodoAdapter
 import com.nanaten.todoapp.databinding.FragmentTodoListBinding
 import com.nanaten.todoapp.di.viewmodel.ViewModelFactory
@@ -18,7 +20,7 @@ import dagger.android.support.DaggerFragment
 import javax.inject.Inject
 
 
-class TodoListFragment : DaggerFragment() {
+class TodoListFragment : DaggerFragment(), ItemClickListener {
 
     private var binding: FragmentTodoListBinding by autoCleared()
     private val mAdapter = TodoAdapter()
@@ -38,16 +40,28 @@ class TodoListFragment : DaggerFragment() {
             todoModel = viewModel
             todoRv.layoutManager = LinearLayoutManager(context)
             todoRv.adapter = mAdapter
-            val tabs = TodoTab.values().toList()
+            val tabs = TodoState.values().toList()
             tabs.forEach { tab ->
                 todoTab.addTab(binding.todoTab.newTab().setText(tab.tabName))
             }
+            todoTab.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+                override fun onTabReselected(tab: TabLayout.Tab?) {
+                }
+
+                override fun onTabSelected(tab: TabLayout.Tab?) {
+                    viewModel.selectTab(tab?.position ?: 0)
+                }
+
+                override fun onTabUnselected(tab: TabLayout.Tab?) {
+                }
+            })
             todoFab.setOnClickListener {
                 viewModel.addTodo("test")
             }
         }
+        mAdapter.setOnItemClickListener(this)
         viewModel.todoList.observe(viewLifecycleOwner, Observer {
-            mAdapter.setData(it)
+            mAdapter.update(it)
         })
         return binding.root
     }
@@ -56,9 +70,13 @@ class TodoListFragment : DaggerFragment() {
         super.onActivityCreated(savedInstanceState)
         viewModel.getTodoList()
     }
+
+    override fun onItemClick(index: Int, view: View) {
+
+    }
 }
 
-enum class TodoTab(val value: Int, val tabName: String) {
+enum class TodoState(val value: Int, val tabName: String) {
     ACTIVE(0, "ACTIVE"),
     ALL(1, "ALL"),
     COMPLETE(2, "COMPLETED")
