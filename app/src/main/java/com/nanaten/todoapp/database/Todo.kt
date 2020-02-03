@@ -1,12 +1,14 @@
 package com.nanaten.todoapp.database
 
-import io.realm.RealmObject
-import io.realm.annotations.PrimaryKey
 
-
-open class Todo(
-    @PrimaryKey
-    var id: Int = 1,
-    var title: String = "",
-    var isCompleted: Boolean = false
-) : RealmObject()
+data class Todo(
+    val id: Int,
+    val title: String,
+    var isCompleted: Boolean
+) {
+    constructor(entity: TodoEntity) : this(
+        entity.id,
+        entity.title,
+        entity.isCompleted
+    )
+}
