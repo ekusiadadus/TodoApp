@@ -34,7 +34,11 @@ class TodoAdapter : BaseRecyclerViewAdapter() {
                 holder.bind(list[position])
                 holder.binding.listDelete.setOnClickListener {
                     it.tag = list[position].id
-                    getItemClickListener().onItemClick(position, it)
+                    getItemClickListener().onItemClick(Operation.DELETE, it)
+                }
+                holder.binding.listCheckBox.setOnClickListener {
+                    it.tag = list[position]
+                    getItemClickListener().onItemClick(Operation.CHECK_CHANGED, it)
                 }
             }
             else -> return
@@ -72,4 +76,10 @@ class TodoAdapter : BaseRecyclerViewAdapter() {
             false
         )
     ) : RecyclerView.ViewHolder(binding.root)
+}
+
+enum class Operation {
+    CHECK_CHANGED,
+    DELETE,
+    SELECT
 }

@@ -61,6 +61,15 @@ class TodoViewModel @Inject constructor(private val repository: TodoRepository) 
         }
     }
 
+    fun checkChanged(todo: Todo) {
+        val list = todoListAll.value
+        list?.first { it.id == todo.id }?.isCompleted = todo.isCompleted
+        viewModelScope.launch {
+            repository.checkChanged(todo)
+            todoListAll.postValue(list)
+        }
+    }
+
     fun selectTab(position: Int) {
         state.postValue(TodoState.values()[position])
     }

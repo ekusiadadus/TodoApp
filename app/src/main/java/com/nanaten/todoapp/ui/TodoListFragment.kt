@@ -12,7 +12,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.tabs.TabLayout
 import com.nanaten.todoapp.R
 import com.nanaten.todoapp.adapter.ItemClickListener
+import com.nanaten.todoapp.adapter.Operation
 import com.nanaten.todoapp.adapter.TodoAdapter
+import com.nanaten.todoapp.database.Todo
 import com.nanaten.todoapp.databinding.FragmentTodoListBinding
 import com.nanaten.todoapp.di.viewmodel.ViewModelFactory
 import com.nanaten.todoapp.util.autoCleared
@@ -71,12 +73,16 @@ class TodoListFragment : DaggerFragment(), ItemClickListener {
         viewModel.getTodoList()
     }
 
-    override fun onItemClick(index: Int, view: View) {
-        when (view.tag) {
-            // Delete Item
-            is Int -> {
+    override fun onItemClick(operation: Operation, view: View) {
+        when (operation) {
+            Operation.DELETE -> {
                 viewModel.deleteTodo(view.tag as Int)
             }
+            Operation.CHECK_CHANGED -> {
+                val todo = view.tag as Todo
+                viewModel.checkChanged(todo)
+            }
+            else -> return
         }
     }
 }
