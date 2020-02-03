@@ -2,24 +2,27 @@ package com.nanaten.todoapp.ui
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.nanaten.todoapp.db.Todo
-import com.nanaten.todoapp.domain.TodoUseCase
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.rxkotlin.addTo
+import androidx.lifecycle.viewModelScope
+import com.nanaten.todoapp.database.Todo
+import com.nanaten.todoapp.domain.TodoRepository
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class TodoViewModel @Inject constructor(private val useCase: TodoUseCase) : ViewModel() {
+class TodoViewModel @Inject constructor(private val repository: TodoRepository) : ViewModel() {
     val todoList = MutableLiveData<MutableList<Todo>>(mutableListOf())
-    private val disposables = CompositeDisposable()
 
     fun getTodoList() {
-        useCase.getTodoList()
-            .subscribe({
-                todoList.postValue(it)
-            }, {
-                it.printStackTrace()
-            })
-            .addTo(disposables)
+        viewModelScope.launch {
+            try {
+                val todos = repository.getTodoList()
+                todos.collect {
+                    todoList.postValue(it)
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
     }
 
     fun addTodo(title: String = "") {
@@ -28,11 +31,6 @@ class TodoViewModel @Inject constructor(private val useCase: TodoUseCase) : View
         val todos = todoList.value
         todos?.add(entity)
         todoList.postValue(todos)
-        useCase.addTodo(todoList.value?.toList() ?: emptyList())
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        disposables.clear()
+        repository.addTodo(todoList.value?.toList() ?: emptyList())
     }
 }

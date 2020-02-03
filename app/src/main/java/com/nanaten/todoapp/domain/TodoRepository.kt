@@ -1,25 +1,26 @@
 package com.nanaten.todoapp.domain
 
-import com.nanaten.todoapp.db.TodoEntity
-import io.reactivex.Single
+import com.nanaten.todoapp.database.Todo
 import io.realm.Realm
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 
 interface TodoRepository {
-    fun getTodoList(): Single<List<TodoEntity>>
-    fun addTodo(list: List<TodoEntity>)
+    suspend fun getTodoList(): Flow<MutableList<Todo>>
+    fun addTodo(list: List<Todo>)
 }
 
 class TodoRepositoryImpl : TodoRepository {
-    override fun getTodoList(): Single<List<TodoEntity>> {
-        return Single.create { emitter ->
+    override suspend fun getTodoList(): Flow<MutableList<Todo>> {
+        return flow {
             val realm = Realm.getDefaultInstance()
-            val entity = realm.where(TodoEntity::class.java).findAll().toList()
-            emitter.onSuccess(entity)
+            val entity = realm.where(Todo::class.java).findAll().toMutableList()
+            emit(entity)
             realm.close()
         }
     }
 
-    override fun addTodo(list: List<TodoEntity>) {
+    override fun addTodo(list: List<Todo>) {
         val realm = Realm.getDefaultInstance()
         realm.use {
             it.executeTransaction { realm ->

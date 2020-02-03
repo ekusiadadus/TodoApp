@@ -5,9 +5,9 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.nanaten.todoapp.R
+import com.nanaten.todoapp.database.Todo
 import com.nanaten.todoapp.databinding.ListItemEmptyBinding
 import com.nanaten.todoapp.databinding.ListItemTodoBinding
-import com.nanaten.todoapp.db.Todo
 
 class TodoAdapter : BaseRecyclerViewAdapter() {
     private var list: List<Todo> = emptyList()
