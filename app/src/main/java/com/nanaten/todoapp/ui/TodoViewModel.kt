@@ -25,7 +25,7 @@ class TodoViewModel @Inject constructor(private val repository: TodoRepository) 
                 }
                 else -> todos
             }
-            
+
         }
 
     fun getTodoList() {
@@ -48,6 +48,15 @@ class TodoViewModel @Inject constructor(private val repository: TodoRepository) 
         list?.add(todo)
         viewModelScope.launch {
             repository.addTodo(todo)
+            todoListAll.postValue(list)
+        }
+    }
+
+    fun deleteTodo(id: Int) {
+        val list = todoListAll.value
+        list?.removeAll { it.id == id }
+        viewModelScope.launch {
+            repository.deleteTodo(id)
             todoListAll.postValue(list)
         }
     }

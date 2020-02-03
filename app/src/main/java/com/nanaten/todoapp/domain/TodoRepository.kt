@@ -9,6 +9,7 @@ import kotlinx.coroutines.flow.flow
 interface TodoRepository {
     suspend fun getTodoList(): Flow<MutableList<Todo>>
     suspend fun addTodo(todo: Todo)
+    suspend fun deleteTodo(id: Int)
 }
 
 class TodoRepositoryImpl : TodoRepository {
@@ -28,6 +29,16 @@ class TodoRepositoryImpl : TodoRepository {
         realm.use {
             it.executeTransaction { realm ->
                 realm.insertOrUpdate(entity)
+            }
+        }
+    }
+
+    override suspend fun deleteTodo(id: Int) {
+        val realm = Realm.getDefaultInstance()
+        realm.use {
+            it.executeTransaction { realm ->
+                val entity = realm.where(TodoEntity::class.java).equalTo("id", id).findFirst()
+                entity?.deleteFromRealm()
             }
         }
     }

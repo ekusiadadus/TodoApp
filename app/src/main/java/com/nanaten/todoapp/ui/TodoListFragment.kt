@@ -72,7 +72,12 @@ class TodoListFragment : DaggerFragment(), ItemClickListener {
     }
 
     override fun onItemClick(index: Int, view: View) {
-
+        when (view.tag) {
+            // Delete Item
+            is Int -> {
+                viewModel.deleteTodo(view.tag as Int)
+            }
+        }
     }
 }
 
