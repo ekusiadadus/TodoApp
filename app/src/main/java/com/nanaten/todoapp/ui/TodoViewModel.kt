@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.nanaten.todoapp.database.Todo
 import com.nanaten.todoapp.domain.TodoRepository
 import com.nanaten.todoapp.util.combine
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -66,6 +67,7 @@ class TodoViewModel @Inject constructor(private val repository: TodoRepository) 
         list?.first { it.id == todo.id }?.isCompleted = todo.isCompleted
         viewModelScope.launch {
             repository.checkChanged(todo)
+            delay(300)
             todoListAll.postValue(list)
         }
     }
