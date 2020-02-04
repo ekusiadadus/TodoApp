@@ -1,11 +1,13 @@
 <resources>
     <string name="app_name">todoapp</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="list_is_empty">リストは空です</string>
     <string name="title">タイトル</string>
     <string name="add">追加</string>
+    <string name="delete">削除</string>
     <string name="please_input_title">タイトルを入力してください</string>
     <string name="clear_completed">CLEAR COMPLETED</string>
+    <string name="confirm_delete">削除しますか？</string>
+    <string name="yes">はい</string>
+    <string name="no">いいえ</string>
 </resources>

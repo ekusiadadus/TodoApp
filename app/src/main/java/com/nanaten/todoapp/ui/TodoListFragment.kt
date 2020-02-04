@@ -82,13 +82,29 @@ class TodoListFragment : DaggerFragment(), ItemClickListener {
     override fun onItemClick(operation: Operation, view: View) {
         when (operation) {
             Operation.DELETE -> {
-                viewModel.deleteTodo(view.tag as Int)
+                deleteTodo(view.tag as Int)
             }
             Operation.CHECK_CHANGED -> {
                 val todo = view.tag as Todo
                 viewModel.checkChanged(todo)
             }
             else -> return
+        }
+    }
+
+    private fun deleteTodo(id: Int) {
+        context?.let {
+            val dialog = MaterialDialog(it)
+            dialog.apply {
+                title(R.string.delete)
+                message(R.string.confirm_delete)
+                positiveButton(R.string.yes) {
+                    viewModel.deleteTodo(id)
+                }
+                negativeButton(R.string.no)
+                cornerRadius(10.0F)
+                show()
+            }
         }
     }
 
@@ -102,7 +118,7 @@ class TodoListFragment : DaggerFragment(), ItemClickListener {
                 customView(R.layout.dialog_item_add_todo, scrollable = true)
                 val title = getCustomView().findViewById<EditText>(R.id.todo_title)
                 val addButton = getCustomView().findViewById<ImageView>(R.id.add_button)
-                
+
                 addButton.setOnClickListener {
                     if (title.text.toString().isBlank()) {
                         Toast.makeText(context, "タイトルを入力してください", Toast.LENGTH_SHORT).show()
