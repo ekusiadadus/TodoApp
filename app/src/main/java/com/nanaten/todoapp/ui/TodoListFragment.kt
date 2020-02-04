@@ -5,10 +5,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
+import android.widget.ImageView
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.customview.customView
+import com.afollestad.materialdialogs.customview.getCustomView
 import com.google.android.material.tabs.TabLayout
 import com.nanaten.todoapp.R
 import com.nanaten.todoapp.adapter.ItemClickListener
@@ -58,7 +64,7 @@ class TodoListFragment : DaggerFragment(), ItemClickListener {
                 }
             })
             todoFab.setOnClickListener {
-                viewModel.addTodo("test")
+                addTodo()
             }
         }
         mAdapter.setOnItemClickListener(this)
@@ -83,6 +89,29 @@ class TodoListFragment : DaggerFragment(), ItemClickListener {
                 viewModel.checkChanged(todo)
             }
             else -> return
+        }
+    }
+
+    private fun addTodo() {
+        context?.let {
+            val dialog = MaterialDialog(it)
+            dialog.apply {
+                title(R.string.add)
+                message(R.string.please_input_title)
+                cornerRadius(10.0F)
+                customView(R.layout.dialog_item_add_todo, scrollable = true)
+                val title = getCustomView().findViewById<EditText>(R.id.todo_title)
+                val addButton = getCustomView().findViewById<ImageView>(R.id.add_button)
+                addButton.setOnClickListener {
+                    if (title.text.toString().isBlank()) {
+                        Toast.makeText(context, "タイトルを入力してください", Toast.LENGTH_SHORT).show()
+                        return@setOnClickListener
+                    }
+                    viewModel.addTodo(title.text.toString())
+                    dismiss()
+                }
+                show()
+            }
         }
     }
 }

@@ -4,4 +4,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="list_is_empty">リストは空です</string>
+    <string name="title">タイトル</string>
+    <string name="add">追加</string>
+    <string name="please_input_title">タイトルを入力してください</string>
 </resources>
