@@ -11,4 +11,9 @@
     <style name="Widget.AppCompat.CompoundButton.CheckBox.CustomCheckBox" parent="Widget.AppCompat.CompoundButton.CheckBox">
         <item name="android:button">@drawable/res_check_box</item>
     </style>
+
+    <!-- Toolbar -->
+    <style name="ToolbarTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:textColorSecondary">@color/white</item>
+    </style>
 </resources>
