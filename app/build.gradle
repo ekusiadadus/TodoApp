@@ -74,4 +74,7 @@ dependencies {
 
     // Material Dialogs
     implementation 'com.afollestad.material-dialogs:core:3.1.1'
+
+    // Lottie
+    implementation 'com.airbnb.android:lottie:3.3.1'
 }

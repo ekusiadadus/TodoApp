@@ -71,6 +71,12 @@ class TodoListFragment : DaggerFragment(), ItemClickListener {
         viewModel.todoList.observe(viewLifecycleOwner, Observer {
             mAdapter.update(it)
         })
+        viewModel.animation.observe(viewLifecycleOwner, Observer {
+            if (it) {
+                binding.animationView.progress = 0F
+                binding.animationView.playAnimation()
+            }
+        })
         return binding.root
     }
 

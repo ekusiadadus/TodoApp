@@ -28,6 +28,7 @@ class TodoViewModel @Inject constructor(private val repository: TodoRepository) 
             }
 
         }
+    val animation = MutableLiveData<Boolean>(false)
 
     fun getTodoList() {
         viewModelScope.launch {
@@ -76,6 +77,10 @@ class TodoViewModel @Inject constructor(private val repository: TodoRepository) 
         list?.first { it.id == todo.id }?.isCompleted = todo.isCompleted
         viewModelScope.launch {
             repository.checkChanged(todo)
+
+            if (todo.isCompleted) {
+                setAnimation()
+            }
             delay(300)
             todoListAll.postValue(list)
         }
@@ -83,5 +88,13 @@ class TodoViewModel @Inject constructor(private val repository: TodoRepository) 
 
     fun selectTab(position: Int) {
         state.postValue(TodoState.values()[position])
+    }
+
+    private suspend fun setAnimation() {
+        viewModelScope.launch {
+            animation.postValue(true)
+            delay(1000)
+            animation.postValue(false)
+        }
     }
 }

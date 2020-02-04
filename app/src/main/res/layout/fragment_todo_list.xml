@@ -8,6 +8,8 @@
         <variable
             name="todoModel"
             type="com.nanaten.todoapp.ui.TodoViewModel" />
+
+        <import type="android.view.View" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -49,5 +51,17 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:rippleColor="@color/white" />
 
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/animation_view"
+            android:layout_width="250dp"
+            android:layout_height="150dp"
+            android:visibility="@{todoModel.animation ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:lottie_autoPlay="false"
+            app:lottie_loop="false"
+            app:lottie_rawRes="@raw/congratulations" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
