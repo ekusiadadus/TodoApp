@@ -10,6 +10,7 @@ interface TodoRepository {
     suspend fun getTodoList(): Flow<MutableList<Todo>>
     suspend fun addTodo(todo: Todo)
     suspend fun deleteTodo(id: Int)
+    suspend fun clearCompleted()
     suspend fun checkChanged(todo: Todo)
 }
 
@@ -40,6 +41,17 @@ class TodoRepositoryImpl : TodoRepository {
             it.executeTransaction { realm ->
                 val entity = realm.where(TodoEntity::class.java).equalTo("id", id).findFirst()
                 entity?.deleteFromRealm()
+            }
+        }
+    }
+
+    override suspend fun clearCompleted() {
+        val realm = Realm.getDefaultInstance()
+        realm.use {
+            it.executeTransaction { realm ->
+                val entity =
+                    realm.where(TodoEntity::class.java).equalTo("isCompleted", true).findAll()
+                entity?.deleteAllFromRealm()
             }
         }
     }

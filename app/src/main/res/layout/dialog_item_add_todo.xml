@@ -20,7 +20,10 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/add_button" />
+        app:layout_constraintEnd_toStartOf="@id/add_button">
+
+        <requestFocus />
+    </EditText>
 
     <ImageView
         android:id="@+id/add_button"

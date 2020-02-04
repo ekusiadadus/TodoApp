@@ -62,6 +62,15 @@ class TodoViewModel @Inject constructor(private val repository: TodoRepository) 
         }
     }
 
+    fun clearCompleted() {
+        val list = todoListAll.value
+        list?.removeAll { it.isCompleted }
+        viewModelScope.launch {
+            repository.clearCompleted()
+            todoListAll.postValue(list)
+        }
+    }
+
     fun checkChanged(todo: Todo) {
         val list = todoListAll.value
         list?.first { it.id == todo.id }?.isCompleted = todo.isCompleted

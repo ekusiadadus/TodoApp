@@ -9,7 +9,7 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.afollestad.materialdialogs.MaterialDialog
@@ -34,7 +34,7 @@ class TodoListFragment : DaggerFragment(), ItemClickListener {
     private val mAdapter = TodoAdapter()
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
-    private val viewModel: TodoViewModel by viewModels { viewModelFactory }
+    private val viewModel: TodoViewModel by activityViewModels { viewModelFactory }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -102,6 +102,7 @@ class TodoListFragment : DaggerFragment(), ItemClickListener {
                 customView(R.layout.dialog_item_add_todo, scrollable = true)
                 val title = getCustomView().findViewById<EditText>(R.id.todo_title)
                 val addButton = getCustomView().findViewById<ImageView>(R.id.add_button)
+                
                 addButton.setOnClickListener {
                     if (title.text.toString().isBlank()) {
                         Toast.makeText(context, "タイトルを入力してください", Toast.LENGTH_SHORT).show()

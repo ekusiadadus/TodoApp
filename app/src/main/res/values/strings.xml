@@ -7,4 +7,5 @@
     <string name="title">タイトル</string>
     <string name="add">追加</string>
     <string name="please_input_title">タイトルを入力してください</string>
+    <string name="clear_completed">CLEAR COMPLETED</string>
 </resources>
