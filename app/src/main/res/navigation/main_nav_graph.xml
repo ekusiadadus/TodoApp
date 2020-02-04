@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/todoListFragment"
         android:name="com.nanaten.todoapp.ui.TodoListFragment"
-        android:label="ToDo List"
+        android:label="ほめてくれるToDo"
         tools:layout="@layout/fragment_todo_list">
 
     </fragment>

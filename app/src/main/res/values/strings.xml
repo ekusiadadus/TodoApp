@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">todoapp</string>
+    <string name="app_name">TodoApp</string>
 
     <string name="list_is_empty">リストは空です</string>
     <string name="title">タイトル</string>
