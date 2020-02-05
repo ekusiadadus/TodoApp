@@ -25,17 +25,18 @@ class MainActivity : DaggerAppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        // Toolbarをセット
-        setSupportActionBar(toolbar)
-        val navController = findNavController(R.id.nav_host_fragment)
-        val appBarConfiguration = AppBarConfiguration(setOf(R.id.todoListFragment))
-        setupActionBarWithNavController(navController, appBarConfiguration)
         if (SharedPref(this).getBoolean(DARK_MODE)) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
         } else {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         }
+        
+        // Toolbarをセット
+        setSupportActionBar(toolbar)
+        val navController = findNavController(R.id.nav_host_fragment)
+        val appBarConfiguration = AppBarConfiguration(setOf(R.id.todoListFragment))
+        setupActionBarWithNavController(navController, appBarConfiguration)
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
