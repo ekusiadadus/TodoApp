@@ -20,6 +20,7 @@ class TodoRepositoryImpl : TodoRepository {
             val realm = Realm.getDefaultInstance()
             val entity = realm.where(TodoEntity::class.java).findAll()
             val todos = entity?.map { Todo(it) }?.toMutableList()
+            todos?.sortBy { it.id }
             emit(todos ?: mutableListOf())
             realm.close()
         }
