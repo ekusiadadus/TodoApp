@@ -1,12 +1,15 @@
 # ほめてくれるTodoアプリ
 タスクを完了させるとアニメーションで祝福してくれるTodoアプリです。
+
 ![](https://github.com/nanaten/TodoApp/blob/develop/screenshot/lottie_animation.gif)
 
 ダークモードにも対応しています。
+
 ![](https://github.com/nanaten/TodoApp/blob/develop/screenshot/dark_theme.png)
 
 ## アーキテクチャ
 MVVM
+
 ![](https://github.com/nanaten/TodoApp/blob/develop/screenshot/structure.png)
 
 ## 構成
