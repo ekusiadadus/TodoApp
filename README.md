@@ -7,6 +7,7 @@
 
 ## アーキテクチャ
 MVVM
+![](https://github.com/nanaten/TodoApp/blob/develop/screenshot/structure.png)
 
 ## 構成
 
