@@ -1,6 +1,8 @@
 package com.nanaten.todoapp.database
 
-
+/**
+ * ViewModelで使用するObject
+ */
 data class Todo(
     val id: Int,
     val title: String,

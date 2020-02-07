@@ -8,10 +8,10 @@ import kotlinx.coroutines.flow.flow
 
 interface TodoRepository {
     suspend fun getTodoList(): Flow<MutableList<Todo>>
-    suspend fun addTodo(todo: Todo)
-    suspend fun deleteTodo(id: Int)
-    suspend fun clearCompleted()
-    suspend fun checkChanged(todo: Todo)
+    fun addTodo(todo: Todo)
+    fun deleteTodo(id: Int)
+    fun clearCompleted()
+    fun checkChanged(todo: Todo)
 }
 
 class TodoRepositoryImpl : TodoRepository {
@@ -26,7 +26,7 @@ class TodoRepositoryImpl : TodoRepository {
         }
     }
 
-    override suspend fun addTodo(todo: Todo) {
+    override fun addTodo(todo: Todo) {
         val entity = TodoEntity(todo)
         val realm = Realm.getDefaultInstance()
         realm.use {
@@ -36,7 +36,7 @@ class TodoRepositoryImpl : TodoRepository {
         }
     }
 
-    override suspend fun deleteTodo(id: Int) {
+    override fun deleteTodo(id: Int) {
         val realm = Realm.getDefaultInstance()
         realm.use {
             it.executeTransaction { realm ->
@@ -46,7 +46,7 @@ class TodoRepositoryImpl : TodoRepository {
         }
     }
 
-    override suspend fun clearCompleted() {
+    override fun clearCompleted() {
         val realm = Realm.getDefaultInstance()
         realm.use {
             it.executeTransaction { realm ->
@@ -57,7 +57,7 @@ class TodoRepositoryImpl : TodoRepository {
         }
     }
 
-    override suspend fun checkChanged(todo: Todo) {
+    override fun checkChanged(todo: Todo) {
         val realm = Realm.getDefaultInstance()
         realm.use {
             it.executeTransaction { realm ->

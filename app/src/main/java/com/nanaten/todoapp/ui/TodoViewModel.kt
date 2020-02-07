@@ -13,8 +13,12 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class TodoViewModel @Inject constructor(private val repository: TodoRepository) : ViewModel() {
-    val todoListAll = MutableLiveData<MutableList<Todo>>(mutableListOf())
-    val state = MutableLiveData<TodoState>(TodoState.ACTIVE)
+    private val todoListAll = MutableLiveData<MutableList<Todo>>(mutableListOf())
+
+    // タブの状態
+    private val state = MutableLiveData<TodoState>(TodoState.ACTIVE)
+
+    // 全TodoListとタブの状態を監視して表示するTodoを制御する
     val todoList: LiveData<MutableList<Todo>> =
         combine(mutableListOf(), todoListAll, state) { _, todos, state ->
             when (state) {
@@ -28,6 +32,7 @@ class TodoViewModel @Inject constructor(private val repository: TodoRepository) 
             }
 
         }
+
     val animation = MutableLiveData<Boolean>(false)
 
     fun getTodoList() {
@@ -86,6 +91,7 @@ class TodoViewModel @Inject constructor(private val repository: TodoRepository) 
         }
     }
 
+    // タブのポジションを保持しておく
     fun selectTab(position: Int) {
         state.postValue(TodoState.values()[position])
     }
