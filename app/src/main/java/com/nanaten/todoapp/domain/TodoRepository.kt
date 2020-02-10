@@ -17,19 +17,18 @@ interface TodoRepository {
 class TodoRepositoryImpl : TodoRepository {
     override suspend fun getTodoList(): Flow<MutableList<Todo>> {
         return flow {
-            val realm = Realm.getDefaultInstance()
-            val entity = realm.where(TodoEntity::class.java).findAll()
-            val todos = entity?.map { Todo(it) }?.toMutableList()
-            todos?.sortBy { it.id }
-            emit(todos ?: mutableListOf())
-            realm.close()
+            Realm.getDefaultInstance().use { realm ->
+                val entity = realm.where(TodoEntity::class.java).findAll()
+                val todos = entity?.map { Todo(it) }?.toMutableList()
+                todos?.sortBy { it.id }
+                emit(todos ?: mutableListOf())
+            }
         }
     }
 
     override fun addTodo(todo: Todo) {
         val entity = TodoEntity(todo)
-        val realm = Realm.getDefaultInstance()
-        realm.use {
+        Realm.getDefaultInstance().use {
             it.executeTransaction { realm ->
                 realm.insertOrUpdate(entity)
             }
@@ -37,8 +36,7 @@ class TodoRepositoryImpl : TodoRepository {
     }
 
     override fun deleteTodo(id: Int) {
-        val realm = Realm.getDefaultInstance()
-        realm.use {
+        Realm.getDefaultInstance().use {
             it.executeTransaction { realm ->
                 val entity = realm.where(TodoEntity::class.java).equalTo("id", id).findFirst()
                 entity?.deleteFromRealm()
@@ -47,8 +45,7 @@ class TodoRepositoryImpl : TodoRepository {
     }
 
     override fun clearCompleted() {
-        val realm = Realm.getDefaultInstance()
-        realm.use {
+        Realm.getDefaultInstance().use {
             it.executeTransaction { realm ->
                 val entity =
                     realm.where(TodoEntity::class.java).equalTo("isCompleted", true).findAll()
@@ -58,8 +55,7 @@ class TodoRepositoryImpl : TodoRepository {
     }
 
     override fun checkChanged(todo: Todo) {
-        val realm = Realm.getDefaultInstance()
-        realm.use {
+        Realm.getDefaultInstance().use {
             it.executeTransaction { realm ->
                 val entity = realm.where(TodoEntity::class.java).equalTo("id", todo.id).findFirst()
                 entity?.isCompleted = todo.isCompleted
