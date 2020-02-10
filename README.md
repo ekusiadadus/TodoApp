@@ -32,6 +32,7 @@ ProjectRoot/
   - [LiveData](https://developer.android.com/topic/libraries/architecture/livedata)
   - [ViewModel](https://developer.android.com/topic/libraries/architecture/viewmodel)
   - [Navigation Component](https://developer.android.com/guide/navigation)
+- [Kotlin Coroutines](https://github.com/Kotlin/kotlinx.coroutines)
 - [Dagger2](https://github.com/google/dagger)
 - [Realm](https://realm.io/docs/java/latest)
 - [Material Dialogs](https://github.com/afollestad/material-dialogs)
