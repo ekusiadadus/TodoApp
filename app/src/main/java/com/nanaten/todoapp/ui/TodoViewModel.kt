@@ -1,37 +1,17 @@
 package com.nanaten.todoapp.ui
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.nanaten.todoapp.database.Todo
 import com.nanaten.todoapp.domain.TodoRepository
-import com.nanaten.todoapp.util.combine
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class TodoViewModel @Inject constructor(private val repository: TodoRepository) : ViewModel() {
-    private val todoListAll = MutableLiveData<MutableList<Todo>>(mutableListOf())
-
-    // タブのポジション
-    private val state = MutableLiveData<TodoState>(TodoState.ACTIVE)
-
-    // 全TodoListとタブのポジションを監視して表示するTodoを制御する
-    val todoList: LiveData<MutableList<Todo>> =
-        combine(mutableListOf(), todoListAll, state) { _, todos, state ->
-            when (state) {
-                TodoState.ACTIVE -> {
-                    todos.filter { !it.isCompleted }.toMutableList()
-                }
-                TodoState.COMPLETE -> {
-                    todos.filter { it.isCompleted }.toMutableList()
-                }
-                else -> todos
-            }
-
-        }
+    val todoListAll = MutableLiveData<MutableList<Todo>>(mutableListOf())
 
     val animation = MutableLiveData<Boolean>(false)
 
@@ -89,11 +69,6 @@ class TodoViewModel @Inject constructor(private val repository: TodoRepository) 
             delay(300)
             todoListAll.postValue(list)
         }
-    }
-
-    // タブのポジションを保持しておく
-    fun selectTab(position: Int) {
-        state.postValue(TodoState.values()[position])
     }
 
     private suspend fun setAnimation() {

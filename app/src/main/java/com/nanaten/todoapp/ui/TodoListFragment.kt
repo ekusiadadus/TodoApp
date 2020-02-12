@@ -11,15 +11,15 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.viewpager2.widget.ViewPager2
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.customview.customView
 import com.afollestad.materialdialogs.customview.getCustomView
-import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 import com.nanaten.todoapp.R
 import com.nanaten.todoapp.adapter.ItemClickListener
 import com.nanaten.todoapp.adapter.Operation
-import com.nanaten.todoapp.adapter.TodoAdapter
+import com.nanaten.todoapp.adapter.ViewPagerAdapter
 import com.nanaten.todoapp.database.Todo
 import com.nanaten.todoapp.databinding.FragmentTodoListBinding
 import com.nanaten.todoapp.di.viewmodel.ViewModelFactory
@@ -31,7 +31,7 @@ import javax.inject.Inject
 class TodoListFragment : DaggerFragment(), ItemClickListener {
 
     private var binding: FragmentTodoListBinding by autoCleared()
-    private val mAdapter = TodoAdapter()
+    lateinit var mAdapter: ViewPagerAdapter
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
     private val viewModel: TodoViewModel by activityViewModels { viewModelFactory }
@@ -42,33 +42,25 @@ class TodoListFragment : DaggerFragment(), ItemClickListener {
     ): View? {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_todo_list, container, false)
+        mAdapter = ViewPagerAdapter()
+        mAdapter.setOnItemClickListener(this)
 
         binding.apply {
             lifecycleOwner = viewLifecycleOwner
             todoModel = viewModel
-            todoRv.layoutManager = LinearLayoutManager(context)
-            todoRv.adapter = mAdapter
-            val tabs = TodoState.values().toList()
-            tabs.forEach { tab ->
-                todoTab.addTab(binding.todoTab.newTab().setText(tab.tabName))
-            }
-            todoTab.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
-                override fun onTabReselected(tab: TabLayout.Tab?) {
-                }
 
-                override fun onTabSelected(tab: TabLayout.Tab?) {
-                    viewModel.selectTab(tab?.position ?: 0)
-                }
-
-                override fun onTabUnselected(tab: TabLayout.Tab?) {
-                }
-            })
             todoFab.setOnClickListener {
                 addTodo()
             }
+            todoPager.adapter = mAdapter
+            todoPager.orientation = ViewPager2.ORIENTATION_HORIZONTAL
+            val mediator = TabLayoutMediator(todoTab, todoPager) { tab, position ->
+                tab.text = TodoState.values()[position].tabName
+            }
+            mediator.attach()
         }
-        mAdapter.setOnItemClickListener(this)
-        viewModel.todoList.observe(viewLifecycleOwner, Observer {
+
+        viewModel.todoListAll.observe(viewLifecycleOwner, Observer {
             mAdapter.update(it)
         })
         viewModel.animation.observe(viewLifecycleOwner, Observer {
