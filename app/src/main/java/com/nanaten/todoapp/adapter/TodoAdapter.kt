@@ -25,7 +25,9 @@ class TodoAdapter : BaseRecyclerViewAdapter() {
 
     fun update(list: List<Todo>) {
         this.list = list
-        notifyDataSetChanged()
+        list.forEachIndexed { index, todo ->
+            notifyItemChanged(index)
+        }
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {

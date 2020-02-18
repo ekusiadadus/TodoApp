@@ -37,9 +37,7 @@ class ViewPagerAdapter : BaseRecyclerViewAdapter() {
 
     fun update(list: List<Todo>) {
         this.list = list
-        list.forEachIndexed { index, todo ->
-            notifyItemChanged(index)
-        }
+        TodoState.values().forEach { notifyItemChanged(it.value) }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
