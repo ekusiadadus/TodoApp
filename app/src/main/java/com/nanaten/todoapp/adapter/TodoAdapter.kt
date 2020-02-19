@@ -42,6 +42,10 @@ class TodoAdapter : BaseRecyclerViewAdapter() {
                     it.tag = list[position]
                     getItemClickListener().onItemClick(Operation.CHECK_CHANGED, it)
                 }
+                holder.binding.listLayout.setOnClickListener {
+                    it.tag = list[position]
+                    getItemClickListener().onItemClick(Operation.SELECT, it)
+                }
             }
             else -> return
         }

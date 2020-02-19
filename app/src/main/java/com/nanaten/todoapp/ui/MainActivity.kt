@@ -30,7 +30,7 @@ class MainActivity : DaggerAppCompatActivity() {
         } else {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         }
-        
+
         // Toolbarをセット
         setSupportActionBar(toolbar)
         val navController = findNavController(R.id.nav_host_fragment)
@@ -42,6 +42,10 @@ class MainActivity : DaggerAppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.options_menu, menu)
         return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        return findNavController(R.id.nav_host_fragment).navigateUp()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

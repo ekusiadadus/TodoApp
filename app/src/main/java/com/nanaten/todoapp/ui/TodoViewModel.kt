@@ -71,6 +71,23 @@ class TodoViewModel @Inject constructor(private val repository: TodoRepository) 
         }
     }
 
+    fun saveTodo() {
+        val list = todoListAll.value
+        val todo = editTodo.value ?: return
+        list?.find { it.id == todo.id }?.apply {
+            title = todo.title
+            content = todo.content
+        }
+        viewModelScope.launch {
+            repository.addTodo(todo)
+            todoListAll.postValue(list)
+        }
+    }
+
+    fun editTodo(todo: Todo) {
+        editTodo.postValue(todo)
+    }
+
     private suspend fun setAnimation() {
         viewModelScope.launch {
             animation.postValue(true)

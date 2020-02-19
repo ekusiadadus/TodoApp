@@ -10,6 +10,20 @@
         android:name="com.nanaten.todoapp.ui.TodoListFragment"
         android:label="ほめてくれるToDo"
         tools:layout="@layout/fragment_todo_list">
+        <action
+            android:id="@+id/action_list_to_detail"
+            app:destination="@id/todoDetailFragment"
+            app:enterAnim="@anim/enter_from_right"
+            app:exitAnim="@anim/exit_to_left"
+            app:popEnterAnim="@anim/enter_from_left"
+            app:popExitAnim="@anim/exit_to_right"
+            app:popUpTo="@id/todoListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/todoDetailFragment"
+        android:name="com.nanaten.todoapp.ui.TodoDetailFragment"
+        android:label=" "
+        tools:layout="@layout/fragment_todo_detail">
 
     </fragment>
 </navigation>

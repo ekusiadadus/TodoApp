@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.ViewPager2
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.customview.customView
@@ -85,6 +86,11 @@ class TodoListFragment : DaggerFragment(), ItemClickListener {
             Operation.CHECK_CHANGED -> {
                 val todo = view.tag as Todo
                 viewModel.checkChanged(todo)
+            }
+            Operation.SELECT -> {
+                val todo = view.tag as Todo
+                viewModel.editTodo(todo)
+                findNavController().navigate(R.id.action_list_to_detail)
             }
             else -> return
         }
