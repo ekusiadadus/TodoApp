@@ -12,7 +12,7 @@ import javax.inject.Inject
 
 class TodoViewModel @Inject constructor(private val repository: TodoRepository) : ViewModel() {
     val todoListAll = MutableLiveData<MutableList<Todo>>(mutableListOf())
-
+    val editTodo = MutableLiveData<Todo>()
     val animation = MutableLiveData<Boolean>(false)
 
     fun getTodoList() {
@@ -30,7 +30,7 @@ class TodoViewModel @Inject constructor(private val repository: TodoRepository) 
 
     fun addTodo(title: String = "") {
         val lastId = todoListAll.value?.lastOrNull()?.id ?: 0
-        val todo = Todo(lastId + 1, title, false)
+        val todo = Todo(lastId + 1, title, "", false)
         val list = todoListAll.value
         list?.add(todo)
         viewModelScope.launch {

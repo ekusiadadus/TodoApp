@@ -12,11 +12,13 @@ open class TodoEntity(
     @PrimaryKey
     var id: Int = 1,
     var title: String = "",
+    var content: String = "",
     var isCompleted: Boolean = false
 ) : RealmObject() {
     constructor(todo: Todo) : this() {
         this.id = todo.id
         this.title = todo.title
+        this.content = todo.content
         this.isCompleted = todo.isCompleted
     }
 }
