@@ -38,8 +38,8 @@
                 <CheckBox
                     android:id="@+id/list_check_box"
                     style="@style/Widget.AppCompat.CompoundButton.CheckBox.CustomCheckBox"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
                     android:layout_marginStart="@dimen/default_margin"
                     android:checked="@={todo.completed}"
                     android:paddingTop="@dimen/default_margin"
@@ -68,9 +68,10 @@
 
                 <ImageView
                     android:id="@+id/list_delete"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
                     android:layout_marginEnd="@dimen/default_margin"
+                    android:padding="8dp"
                     android:src="@drawable/ic_delete_24dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
