@@ -42,10 +42,11 @@ class TodoAdapter : BaseRecyclerViewAdapter() {
                     it.tag = list[position]
                     getItemClickListener().onItemClick(Operation.CHECK_CHANGED, it)
                 }
-                holder.binding.listLayout.setOnClickListener {
+                holder.binding.textField.setOnClickListener {
                     it.tag = list[position]
                     getItemClickListener().onItemClick(Operation.SELECT, it)
                 }
+                holder.binding.executePendingBindings()
             }
             else -> return
         }
