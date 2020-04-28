@@ -18,8 +18,8 @@ import org.junit.Test
 @ExperimentalCoroutinesApi
 class TodoViewModelTest {
 
-    lateinit var repository: TodoRepository
-    lateinit var viewModel: TodoViewModel
+    private lateinit var repository: TodoRepository
+    private lateinit var viewModel: TodoViewModel
 
     @get:Rule
     val rule = CoroutinesTestRule()
