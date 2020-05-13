@@ -7,7 +7,7 @@ apply plugin: 'realm-android'
 
 android {
     compileSdkVersion 29
-    buildToolsVersion "29.0.2"
+    buildToolsVersion "29.0.3"
     defaultConfig {
         applicationId "com.nanaten.todoapp"
         minSdkVersion 21
@@ -65,10 +65,10 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
 
     // Fragment-KTX
-    implementation "androidx.fragment:fragment-ktx:1.2.0"
+    implementation "androidx.fragment:fragment-ktx:1.2.4"
 
     // Navigation
-    def navigation_version = '2.2.0'
+    def navigation_version = '2.2.2'
     implementation "androidx.navigation:navigation-fragment-ktx:$navigation_version"
     implementation "androidx.navigation:navigation-ui-ktx:$navigation_version"
 
