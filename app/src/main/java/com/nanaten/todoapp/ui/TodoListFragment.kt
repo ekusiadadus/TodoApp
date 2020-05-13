@@ -33,6 +33,7 @@ class TodoListFragment : DaggerFragment(), ItemClickListener {
 
     private var binding: FragmentTodoListBinding by autoCleared()
     lateinit var mAdapter: ViewPagerAdapter
+
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
     private val viewModel: TodoViewModel by activityViewModels { viewModelFactory }
@@ -73,8 +74,8 @@ class TodoListFragment : DaggerFragment(), ItemClickListener {
         return binding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         viewModel.getTodoList()
     }
 
